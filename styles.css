@@ -1,0 +1,27 @@
+#startPage {
+background-color: olive;
+width: auto;
+height: 100px;
+}
+
+#lettersContainer {
+background-color: turquoise;
+width: auto;
+height: 100px;
+}
+
+p {
+ background-color: slategray;
+}
+
+#buttonContainer {
+background-color: tomato;
+width: auto;
+height: 100px;
+}
+
+#totalPointsContainer {
+    background-color: seagreen;
+    width: auto;
+    height: 100px;
+}
