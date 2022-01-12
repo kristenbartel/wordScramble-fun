@@ -1,10 +1,15 @@
-
+import{getRandom} from './service.js'
 //for each clicked letterValue, letterValue inputs to userAttempt[] .push()
 //       DOM inputContainer.appendChild()
 //submitButton clicked, inputAnswerChecked(userAttempt, correctAnswers)
 //      if correct DOM accumulatedPoints.appendChild(userAttempt[])
 //need accumulated point: for each winningAnswer.push() +1 to accumulatedPoints
 //accumulate points, count and return to user
+// --------------fetch promise--------------
+// fetch("https://freebee.fun/cgi-bin/random")
+//   .then(response => response.text())
+//   .then(result => console.log(result.wordlist))
+//   .catch(error => console.log('error', error));
 
 //---------------DOM bindings----------------------------------------------
 let startGame = document.getElementById('startPage');
@@ -24,6 +29,7 @@ let reshuffle = document.getElementById('reshuffle');
 let totalPointsContainer = document.getElementById('totalPointsContainer');
 let answerBank = document.getElementById('answerBankContainer');
 
+//forEach letter in the dataset populate the DOM element-- to avoid hard coding
 
 //----------letters--------
 letterW.addEventListener ('click', () => {
@@ -48,8 +54,8 @@ letterN.addEventListener ('click', () => {
     inputContainer.innerHTML += 'n';
 })
 // ------------submit button------------
-
-let correctAnswers = ['wined', 'when','wine','awed','dawn', 'wide', 'widen', 'wean', 'wane', 'wind'];
+//need to implement service here
+let correctAnswers = ['wined', 'when','wine','awed','dawn', 'wide', 'widen', 'wean', 'wane', 'wind', 'wand', 'and'];
 
 let accumulatedPoints = 0;
 
@@ -61,9 +67,9 @@ submitButton.addEventListener('click', () => {
             answerBank.innerHTML += winningAttempt + ', ';
             inputContainer.innerHTML = '';
             accumulatedPoints++
-            totalPointsContainer.innerHTML += accumulatedPoints
+            totalPointsContainer.innerHTML = accumulatedPoints;
             alert('nice!');
-            return;
+            return true;
         } else {
             alert('word not found, please try again')
             inputContainer.innerHTML = '';
@@ -73,11 +79,12 @@ submitButton.addEventListener('click', () => {
 })
 // -------------delete button---------------
 deleteButton.addEventListener('click', () => {
-    inputContainer.innerHTML = '';
-    // this deletes all contents-- how to delete the last char?
-    // let input  = inputContainer.innerText;
-    // input.slice(0, -1);
+    let input  = String(inputContainer.innerText);
+    let newString = input.slice(0, -1);
+    inputContainer.innerHTML = newString;
 }) 
+
+
 reshuffle.addEventListener('click', () => {
     alert('should reshuffle the letters <p> elements')
 })
