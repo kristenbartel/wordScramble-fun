@@ -5,15 +5,13 @@ import{getRandom} from './service.js'
 //      if correct DOM accumulatedPoints.appendChild(userAttempt[])
 //need accumulated point: for each winningAnswer.push() +1 to accumulatedPoints
 //accumulate points, count and return to user
-// --------------fetch promise--------------
-// fetch("https://freebee.fun/cgi-bin/random")
-//   .then(response => response.text())
-//   .then(result => console.log(result.wordlist))
-//   .catch(error => console.log('error', error));
+
 
 //---------------DOM bindings----------------------------------------------
+//loop over result.letters- for each item in array create an element and add the value of the array to it's innerHTML
 let startGame = document.getElementById('startPage');
-let letterW = document.getElementById('w');
+let letterW = document.getElementById('1');
+
 let letterA = document.getElementById('a');
 let letterI = document.getElementById('i');
 let letterH = document.getElementById('h');
@@ -53,30 +51,97 @@ letterD.addEventListener ('click', () => {
 letterN.addEventListener ('click', () => {
     inputContainer.innerHTML += 'n';
 })
-// ------------submit button------------
-//need to implement service here
-let correctAnswers = ['wined', 'when','wine','awed','dawn', 'wide', 'widen', 'wean', 'wane', 'wind', 'wand', 'and'];
+
+
+// --------------fetch promise--------------
+
+
+
+const logData = (result) => {
+    console.log(result);
+    return result;
+}
+
+let extractWordList = (result) => {
+    console.log(result.wordlist);
+    return result.wordlist;
+}
+
+let extractLetters = (result) => {
+    console.log(result.letters);
+    return result.letters;
+}
+
+
+const log = async () => {
+    try {
+        fetch("https://freebee.fun/cgi-bin/random")
+.then(response => response.json())
+.then(logData)
+.then(extractWordList)
+.then(extractLetters)
+//  .then(correctAnswers)
+//  .then(answerCheck)
+    }
+}
+
+fetch("https://freebee.fun/cgi-bin/random")
+.then(response => response.json())
+.then(logData)
+.then(extractWordList)
+.then(extractLetters)
+//  .then(correctAnswers)
+//  .then(answerCheck)
+
+// const correctAnswers = (result) => {
+//     console.log(result.wordlist);
+//     return result.wordlist};
+
 
 let accumulatedPoints = 0;
 
-submitButton.addEventListener('click', () => {
-   for (i = 0; i < correctAnswers.length; i++) {
-       if (correctAnswers.includes(inputContainer.innerHTML)) {
-            let winningAttempt = '';
-            winningAttempt += inputContainer.innerHTML;
-            answerBank.innerHTML += winningAttempt + ', ';
-            inputContainer.innerHTML = '';
-            accumulatedPoints++
-            totalPointsContainer.innerHTML = accumulatedPoints;
-            alert('nice!');
-            return true;
-        } else {
-            alert('word not found, please try again')
-            inputContainer.innerHTML = '';
-            return false;
-        } 
-    }
-})
+
+
+
+//use extractWordList.map()
+
+submitButton.addEventListener('click', correctAnswers => {
+    
+    if (extractWordList.includes(inputContainer.innerHTML)) {
+         let winningAttempt = '';
+         winningAttempt += inputContainer.innerHTML;
+         answerBank.innerHTML += winningAttempt + ', ';
+         inputContainer.innerHTML = '';
+         accumulatedPoints++;
+         totalPointsContainer.innerHTML = accumulatedPoints;
+        //  alert('nice!');
+         return true;
+     } else {
+        //  alert('word not found, please try again');
+         inputContainer.innerHTML = '';
+         return false;
+     } 
+ })
+//  const answerCheck = (correctAnswers) => {
+    
+//         if (correctAnswers.includes(inputContainer.innerHTML)) {
+//              let winningAttempt = '';
+//              winningAttempt += inputContainer.innerHTML;
+//              answerBank.innerHTML += winningAttempt + ', ';
+//              inputContainer.innerHTML = '';
+//              accumulatedPoints++;
+//              totalPointsContainer.innerHTML = accumulatedPoints;
+//             //  alert('nice!');
+//              return true;
+//          } else {
+//             //  alert('word not found, please try again');
+//              inputContainer.innerHTML = '';
+//              return false;
+//          } 
+//      }
+
+
+    
 // -------------delete button---------------
 deleteButton.addEventListener('click', () => {
     let input  = String(inputContainer.innerText);
@@ -88,4 +153,3 @@ deleteButton.addEventListener('click', () => {
 reshuffle.addEventListener('click', () => {
     alert('should reshuffle the letters <p> elements')
 })
-
